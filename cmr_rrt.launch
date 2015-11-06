@@ -1,0 +1,34 @@
+<launch>
+
+<node
+	pkg="stage_ros"
+	type="stageros"
+	name="stage_app"
+	respawn="false"
+	args="$(find cmr_rrt)/data/my.world"
+/>
+<!--
+<node
+	pkg="cmr_rrt"
+	type="debug.py"
+	name="robot control and diagnostic console"
+	respawn="false"
+	launch-prefix="urxvt -e"
+/>
+-->
+
+<node
+    pkg="cmr_rrt"
+    type="rrt_planner.py"
+    name="rrt planner"
+    respawn="false"
+/>
+
+<node
+    pkg="cmr_rrt"
+    type="rrt_viz.py"
+    name="rrt visualizer"
+    respawn="false"
+/>
+
+</launch>
