@@ -10,7 +10,6 @@ Status:
 - [ ] Convex collision for `SimpleMap`.
 - [ ] Visualizer of the RRT as it's built
 - [ ] Multi-tree planner
-- [ ] Heuristics for `random_state`?
 - [ ] Integrate planner into ROS control node
 
 [1] - http://msl.cs.uiuc.edu/~lavalle/papers/LavKuf01b.pdf
