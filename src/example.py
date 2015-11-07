@@ -15,6 +15,12 @@ from holonomic_turtle import HolonomicTurtleRRT
 import map as smap
 m = smap.SimpleMap(-10, 10, -10, 10, [])
 h = HolonomicTurtleRRT((0.0,)*5, 0.5, 0.5, 15, 15, 0.5, m)
-h.extend_randomly()
-h.extend_randomly()
-print map(lambda h: h.data, h.root.children)
+for _ in range(100):
+    print h.extend_randomly()
+
+def print_tree(t, depth):
+    print("   "*depth+" + "+str(t.data))
+    for child in t.children:
+        print_tree(child, depth+1)
+
+print_tree(h.root, 0)

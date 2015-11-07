@@ -6,7 +6,7 @@ Status:
 
 - [x] Core RRT algorithm
 - [x] Turtlebot motion model
-- [ ] Nearest-neighbor query for turtlebot
+- [x] Nearest-neighbor query for turtlebot
 - [ ] Convex collision for `SimpleMap`.
 - [ ] Visualizer of the RRT as it's built
 - [ ] Multi-tree planner

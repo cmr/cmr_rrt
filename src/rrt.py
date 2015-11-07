@@ -36,6 +36,11 @@ class RRT(object):
     def random_state(self):
         raise NotImplementedError()
 
+    def insert_node(self, parent, new_state, edge_data):
+        n = tree.Node(new_state)
+        parent.add_child(n, edge_data = edge_data)
+        return n
+
     # This method should somehow determine the nearest vertex to x in the
     # current RRT, returning the Node object.
     def nearest_neighbor(self, x):
@@ -59,7 +64,8 @@ class RRT(object):
         raise NotImplementedError()
 
     def extend_randomly(self):
-        self.extend(self.random_state())
+        return self.extend(self.random_state())
+
     # This method should not be overridden. This method takes a destination
     # state x_dst and tries to extend the tree towards x_dst.
     #
@@ -70,9 +76,9 @@ class RRT(object):
         x_near = self.nearest_neighbor(x_dst)
         ns = self.new_state(x_near, x_dst)
         if ns is None:
-            return TRAPPED
+            return (TRAPPED, None)
         x_new, u_new = ns
-        x_near.add_child(tree.Node(x_new), edge_data = u_new)
+        n = self.insert_node(x_near, x_new, u_new)
         if self.close_enough(x_near.data, x_dst):
-            return REACHED
-        return ADVANCED
+            return (REACHED, n)
+        return (ADVANCED, n)

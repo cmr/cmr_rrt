@@ -14,9 +14,11 @@
 import random
 import math
 
+from rtree import index
 from scipy import integrate, optimize
 
 import rrt
+import tree
 
 # A RRT specialized to a "holonomic turtle", a robot in 2D whose pose is (x,
 # y, theta) representing the position and orientation on a map, with kinematic
@@ -75,6 +77,11 @@ class HolonomicTurtleRRT(rrt.RRT):
         self.max_dr = max_dr
         self.dt = dt
         self.root.edge_data = (0, 0)
+        self.invspidx = {id(self.root): self.root}
+        p = index.Property()
+        p.dimension = 5
+        self.spidx = index.Index(properties=p)
+        self.spidx.insert(id(self.root), initial_configuration + initial_configuration)
 
     def random_position_velocity(self):
         return random.uniform(-self.max_vel, self.max_vel)
@@ -89,9 +96,15 @@ class HolonomicTurtleRRT(rrt.RRT):
         av = self.random_angular_velocity()
         return (x, y, r, pv, av)
 
-    # use a k-d tree
+    def insert_node(self, parent, new_state, edge_data):
+        n = tree.Node(new_state)
+        parent.add_child(n, edge_data = edge_data)
+        self.invspidx[id(n)] = n
+        self.spidx.insert(id(n), new_state + new_state)
+        return n
+
     def nearest_neighbor(self, x):
-        return self.root
+        return self.invspidx[next(self.spidx.nearest(x+x))]
 
     # Given a configuration (x0, y0, r0, p0, a0), to try and reach
     # (x1, y1, r1, p1, a1), we will ... do something. What we want to do is
