@@ -117,9 +117,9 @@ class HolonomicTurtleRRT(rrt.RRT):
     # r(t) = r_0 + a_0 * t + (alpha * t**2)/2
     # ... (see step above)
     #
-    # I then run scipy's optimizer to minimize the sum of the square of x_dst
-    # - step(...). I'm not sure of this is optimal, but it's at least one way
-    # to collapse the vector into a scalar for scipy.
+    # I then run scipy's optimizer to minimize the sum of the component-wise
+    # square of x_dst - step(...). I'm not sure of this is optimal, but it's
+    # at least one way to collapse the vector into a scalar for scipy.
     def new_state(self, src_node, x_dst):
         x_src = src_node.data
         def objective(x):
