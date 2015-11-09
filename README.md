@@ -12,8 +12,10 @@ Running the damn thing
 Ensure that the ROS core is running. Then, you can run the following programs:
 
 ```
-./src/rrt_viz.py data/small_maze.png &
-./rrt_planner.py "(22, 17, 0, 0, 0)" "(23, 175, 0, 0, 0)" ../data/easy_to_move_in_maze.png %
+./src/rrt_viz.py data/small_maze.png
+```
+```
+./src/rrt_planner.py "(22, 17, 0, 0, 0)" "(23, 175, 0, 0, 0)" ../data/easy_to_move_in_maze.png
 ```
 
 The first parameter to `rrt_planner` is the initial state. The second is the
