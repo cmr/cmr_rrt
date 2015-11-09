@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,6 +16,7 @@
 
 <launch>
 
+<!--
 <node
 	pkg="stage_ros"
 	type="stageros"
@@ -22,6 +24,7 @@
 	respawn="false"
 	args="$(find cmr_rrt)/data/my.world"
 />
+-->
 <!--
 <node
 	pkg="cmr_rrt"
@@ -31,19 +34,22 @@
 	launch-prefix="urxvt -e"
 />
 -->
-
+<!--
 <node
     pkg="cmr_rrt"
     type="rrt_planner.py"
-    name="rrt planner"
+    args="$(find cmr_rrt)/data/small_maze.png"
+    name="rrt_planner"
     respawn="false"
 />
 
 <node
     pkg="cmr_rrt"
     type="rrt_viz.py"
-    name="rrt visualizer"
+    args="$(find cmr_rrt)/data/easy_to_move_in_maze.png"
+    name="rrt_visualizer"
     respawn="false"
 />
+-->
 
 </launch>

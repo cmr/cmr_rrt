@@ -15,9 +15,17 @@ import tree
 
 # TODO: this ought to be an ABC.
 
-REACHED = object()
-ADVANCED = object()
-TRAPPED = object()
+class Symbol(object):
+    def __init__(self, s):
+        self.s = s
+    def __str__(self):
+        return self.s
+    def __repr__(self):
+        return self.s
+
+REACHED = Symbol("REACHED")
+ADVANCED = Symbol("ADVANCED")
+TRAPPED = Symbol("TRAPPED")
 
 # An implementation of the rapidly-exploring random tree (RRT).
 #

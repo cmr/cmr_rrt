@@ -16,6 +16,7 @@ import math
 
 from rtree import index
 from scipy import integrate, optimize
+from numpy import arange
 
 import rrt
 import tree
@@ -62,9 +63,10 @@ def step(x_orig, interval, alpha, beta):
         return x_orig[3] + beta * t
 
     # toss out the error terms. probably not important anyway, amirite ;)
-    q = lambda f: integrate.quad(f, 0, interval)[0]
+    q = lambda f, interval: integrate.quad(f, 0, interval)[0]
+    s = lambda interval: (q(x, interval), q(y, interval), q(r, interval), q(p, interval), q(a, interval))
 
-    return (q(x), q(y), q(r), q(p), q(a))
+    return s(interval)
 
 class HolonomicTurtleRRT(rrt.RRT):
     def __init__(self, initial_configuration, max_dp, max_dr, max_vel, max_avel, dt, map):
@@ -134,6 +136,8 @@ class HolonomicTurtleRRT(rrt.RRT):
             bounds=((-self.max_dr, self.max_dr), (-self.max_dp, self.max_dp)))
 
         x_new = step(x_src, self.dt, res.x[0], res.x[1])
+        if self.map.collides_img((x_new[0], x_new[1])):
+            return None
         return x_new, res.x
 
     # close enough if each component of abs(a-b) less than some epsilon
